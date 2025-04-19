@@ -34,11 +34,13 @@ A file (I.E a plain text file) can be encrypted into a cipher text file as follo
 qrc --encrypt key=public.key plaintext=plaintextfile.txt ciphertext=ciphertextfile.qrc
 
 In this example, a file plaintextfile.txt is being encrypted into a file ciphertextfile.qrc
+
 Note that a public key must be used for encryption.
 
 qrc --decrypt key=secret.key ciphertext=ciphertextfile.qrc plaintext=plaintextfile.txt
 
 In this example, a file ciphertextfile.qrc is being decrypted into a file plaintextfile.txt
+
 Note that a secret key must be used for decryption.
 
 
