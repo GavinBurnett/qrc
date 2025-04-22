@@ -10,7 +10,6 @@ import (
 // Main: program entry point
 func main() {
 
-	//	var splitShowKey []string
 	var keysGenerated bool = false
 
 	var key string

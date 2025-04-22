@@ -228,7 +228,7 @@ func EncryptSecretKey(_secretKeyDataBytes []byte) (bool, [SECRET_KEY_CIPHER_LENG
 	if len(_secretKeyDataBytes) == SECRET_KEY_LENGTH {
 
 		// Get password to encrypt with
-		password = GetPassword()
+		password = GetUserPassword(true)
 
 		if len(password) > 0 {
 
@@ -335,7 +335,7 @@ func DecryptSecretKey(_secretKeyCipherDataBytes [SECRET_KEY_CIPHER_LENGTH]byte) 
 		if len(secretKeySetCipherDataBytes) == SECRET_KEY_CIPHER_LENGTH {
 
 			// Get password to encrypt with
-			password = GetPassword()
+			password = GetUserPassword(false)
 
 			if len(password) > 0 {
 
@@ -432,14 +432,18 @@ func GetUserInput(_prompt string) string {
 		if err == nil && len(inputStr) > 0 {
 
 			// Remove any linux carrige returns
-			userInput = strings.Replace(inputStr, "\n", "", -1)
+			if strings.Contains(inputStr, "\n") {
+				userInput = strings.Replace(inputStr, "\n", "", -1)
+			}
+
+			// Remove any windows carrige returns
+			if strings.Contains(inputStr, "\r\n") {
+				userInput = strings.Replace(inputStr, "\r\n", "", -1)
+			}
 
 		} else {
 			fmt.Println(UI_FailedToReadCmdData)
 		}
-
-		// Move onto next line in command line
-		//fmt.Println()
 
 	} else {
 		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
@@ -450,7 +454,52 @@ func GetUserInput(_prompt string) string {
 }
 
 // GetPassword: Gets user password from command line
-func GetPassword() string {
+func GetUserPassword(_confirm bool) string {
+
+	var passwordString string
+	var confirmPasswordString string
+	var returnPasswordString string
+
+	if _confirm == false {
+
+		// Read password once
+		returnPasswordString = GetPassword(fmt.Sprintf(UI_EnterPassword))
+
+	} else {
+
+		// Read password twice
+		passwordString = GetPassword(fmt.Sprintf(UI_EnterPassword))
+
+		if len(passwordString) > 0 {
+
+			confirmPasswordString = GetPassword(fmt.Sprintf(UI_ConfirmPassword))
+
+			if len(confirmPasswordString) > 0 {
+
+				if passwordString == confirmPasswordString {
+
+					// Both passwords match
+					returnPasswordString = confirmPasswordString
+
+				} else {
+					fmt.Println(UI_InvalidPassword)
+				}
+
+			} else {
+				fmt.Println(UI_InvalidPassword)
+			}
+
+		} else {
+			fmt.Println(UI_InvalidPassword)
+		}
+
+	}
+
+	return returnPasswordString
+}
+
+// GetPassword: Gets user password from command line
+func GetPassword(_passwordPrompt string) string {
 
 	var reader *bufio.Reader
 	var password []byte
@@ -458,43 +507,49 @@ func GetPassword() string {
 
 	var err error
 
-	fmt.Print(UI_EnterPassword)
+	if len(_passwordPrompt) > 0 {
 
-	if DEBUG == true {
+		fmt.Print(_passwordPrompt)
 
-		// Echo password to terminal
+		if DEBUG == true {
 
-		// Read user input from command line
-		reader = bufio.NewReader(os.Stdin)
-		passwordString, err = reader.ReadString('\n')
+			// Echo password to terminal
 
-		if err == nil && len(passwordString) > 0 {
+			// Read user input from command line
+			reader = bufio.NewReader(os.Stdin)
+			passwordString, err = reader.ReadString('\n')
 
-			// Remove any linux carrige returns
-			passwordString = strings.Replace(passwordString, "\n", "", -1)
+			if err == nil && len(passwordString) > 0 {
+
+				// Remove any linux carrige returns
+				passwordString = strings.Replace(passwordString, "\n", "", -1)
+
+			} else {
+				fmt.Println(UI_FailedToReadCmdData)
+			}
 
 		} else {
-			fmt.Println(UI_FailedToReadCmdData)
-		}
 
+			// Do not echo password to terminal
+
+			// Read user input from command line
+			password, err = term.ReadPassword(int(syscall.Stdin))
+
+			if err == nil && len(password) > 0 {
+
+				// Convert password to string
+				passwordString = string(password)
+
+			} else {
+				fmt.Println(UI_FailedToReadCmdData)
+			}
+
+			// Move onto next line in command line
+			fmt.Println()
+		}
 	} else {
-
-		// Do not echo password to terminal
-
-		// Read user input from command line
-		password, err = term.ReadPassword(int(syscall.Stdin))
-
-		if err == nil && len(password) > 0 {
-
-			// Convert password to string
-			passwordString = string(password)
-
-		} else {
-			fmt.Println(UI_FailedToReadCmdData)
-		}
-
-		// Move onto next line in command line
-		fmt.Println()
+		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
+		fmt.Println(fmt.Sprintf(UI_Parameter, "_passwordPrompt: "+_passwordPrompt))
 	}
 
 	return passwordString

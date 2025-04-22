@@ -89,6 +89,7 @@ Shared key cipher text length: %v`
 	UI_DateCreated               = `Date created: %s`
 	UI_KeysGeneratedOK           = `Public and secret keys generated successfully`
 	UI_EnterPassword             = `Enter Password:`
+	UI_ConfirmPassword           = `Confirm Password:`
 	UI_SHA256Matches             = `SHA256Sums Match. Key value: %x Calculated value: %x`
 	UI_SHA256DoesNotMatch        = `SHA256Sums Do not match. Key value: %x Calculated value: %x`
 	UI_SecretKeyData             = `Secret key data: %v`
@@ -104,7 +105,7 @@ Shared key cipher text length: %v`
 	UI_KeyDecrypted              = `Key decrypted`
 	UI_EncryptArgs               = "Encrypt arguments: %s %s %s"
 	UI_DecryptArgs               = "Decrypt arguments: %s %s %s"
-	UI_Help                      = `qrc v1.0 by gburnett@outlook.com
+	UI_Help                      = `qrc v1.1 by gburnett@outlook.com
 
 Arguments: 
 
