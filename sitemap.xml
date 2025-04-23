@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
+            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
+
+
+<url>
+  <loc>https://github.com/GavinBurnett/qrc</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>1.00</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/activity</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/issues</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/pulls</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/actions</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/security</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/.gitignore</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/README.md</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/crypt.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/debug.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/files.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/globals.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/go.mod</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/go.sum</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/googleb4baa1d1943d4718.html</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/keys.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/main.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/robots.txt</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/blob/master/ui_strings.go</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/releases</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/releases/tag/Version1.1</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/search?q=repo%3AGavinBurnett%2Fqrc++language%3AGo</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/search?q=repo%3AGavinBurnett%2Fqrc++language%3AHTML</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.80</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/commit/11368f0a6774a6f848a86347ee44b1fb4d3a426c</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/commit/a1ad575e911e29f71063f3a3fce3c46dc38bdb08</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/releases/tag/Version1.0</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.64</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels?sort=name-asc</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels?sort=name-desc</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels?sort=count-desc</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels?sort=count-asc</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/bug</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/documentation</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/duplicate</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/enhancement</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/good%20first%20issue</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/help%20wanted</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/invalid</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/question</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/labels/wontfix</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=due_date&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=due_date&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=completeness&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=completeness&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=title&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=title&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=count&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=count&amp;state=open</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/commit/06314535a53557a9f09db6cfa36f3405d2144ea6</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/commit/71643ecf3ad2cc4116515a466abfd484fa8a3d48</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.51</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=due_date&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=due_date&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=completeness&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=completeness&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=title&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=title&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=desc&amp;sort=count&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/milestones?direction=asc&amp;sort=count&amp;state=closed</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+<url>
+  <loc>https://github.com/GavinBurnett/qrc/commit/1daad8864af0e59554d0dcff005b320615cfb2ff</loc>
+  <lastmod>2025-04-23T10:05:00+00:00</lastmod>
+  <priority>0.41</priority>
+</url>
+
+
+</urlset>
