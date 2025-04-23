@@ -7,7 +7,7 @@ The library implements the quantum-resistant key encapsulation method ML-KEM - s
 
 Installation
 
-Download the archive file containing the executable for the relevant operating system from the releases. Validate the PGP signature if an integrity check is advisable, and extract the executable from the archive file. Place the executable in a suitable directory; E.G /home/username/qrc, or C:\Users\username\qrc\qrc.exe
+Download the archive file containing the executable for the relevant operating system from the releases. Validate the PGP signature if an integrity check is advisable, and extract the executable from the archive file. Place the executable in a suitable directory; E.G /home/username/qrc/qrc, or C:\Users\username\qrc\qrc.exe
 
 GnuPG Signing Key: http://pgp.mit.edu/pks/lookup?op=get&search=0x203092F792253A6F
 
