@@ -10,17 +10,21 @@ import (
 // Main: program entry point
 func main() {
 
-	var keysGenerated bool = false
-
 	var key string
 	var keyParsed bool = false
 	var plainText string
 	var plainTextParsed bool = false
 	var cipherText string
 	var cipherTextParsed bool = false
+	var publicKey string
+	var publicKeyParsed bool = false
+	var secretKey string
+	var secretKeyParsed bool = false
 
+	var keysGenerated bool = false
 	var encrypted bool = false
 	var decrypted bool = false
+	var validated bool = false
 
 	exitCode := 0
 
@@ -66,13 +70,44 @@ func main() {
 				//File
 			}
 		}
-		if len(os.Args) == 3 || len(os.Args) == 4 {
+		if len(os.Args) == 3 {
 			// Wrong number of arguments - display error
 			exitCode = 1
 			fmt.Println(UI_InvalidArgs)
 		}
+		if len(os.Args) == 4 {
+			if os.Args[1] == CMD_VALIDATE_KEYS {
+				// Validate keys
+				if DEBUG == true {
+					fmt.Println(CMD_VALIDATE_KEYS)
+				}
+				if strings.HasPrefix(os.Args[2], CMD_SECRET) && strings.HasPrefix(os.Args[3], CMD_PUBLIC) {
+
+					secretKey, publicKeyParsed = ParseCMDArgument(os.Args[2])
+					publicKey, secretKeyParsed = ParseCMDArgument(os.Args[3])
+
+					if secretKeyParsed == true && publicKeyParsed == true {
+						if DEBUG == true {
+							fmt.Println(fmt.Sprintf(UI_ValidateArgs, secretKey, publicKey))
+						}
+						validated = ValidateKeys(secretKey, publicKey)
+						if validated == false {
+							exitCode = 1
+						}
+					} else {
+						exitCode = 1
+						fmt.Println(UI_InvalidArgs)
+					}
+
+				} else {
+					exitCode = 1
+					fmt.Println(UI_InvalidArgs)
+				}
+			}
+		}
 		if len(os.Args) == 5 {
 			if os.Args[1] == CMD_ENCRYPT {
+				// Encrypt file
 				if DEBUG == true {
 					fmt.Println(CMD_ENCRYPT)
 				}
@@ -99,8 +134,8 @@ func main() {
 					exitCode = 1
 					fmt.Println(UI_InvalidArgs)
 				}
-
 			} else if os.Args[1] == CMD_DECRYPT {
+				// Decrypt file
 				if DEBUG == true {
 					fmt.Println(CMD_DECRYPT)
 				}

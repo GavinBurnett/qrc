@@ -56,13 +56,15 @@ const (
 	UI_FailedToCreateTempKey                = `ERROR: Failed to create temporary key`
 	UI_FailedToReadCmdData                  = `ERROR: Failed to read data from command line`
 	UI_FailedToLoadKey                      = `ERROR: Failed to load key`
+	UI_PublicKeyNotFromSecretKey            = `Public key: %s not a match with Secret key: %s`
+	UI_PublicKeyFromSecretKey               = `Public key: %s matches with Secret key: %s`
 	UI_FileSize                             = `%s File size: %v`
 	UI_SeekOffset                           = `Seeked to offset: %v`
-	UI_Encrypting                           = "Attempting to encrypt plain text file: %s into cipher text file: %s"
-	UI_Decrypting                           = "Attempting to decrypt cipher text file: %s into plain text file: %s"
-	UI_Encrypted                            = "Successfully encrypted plain text file: %s into cipher text file: %s"
-	UI_Decrypted                            = "Successfully decrypted cipher text file: %s into plain text file: %s"
-	UI_SHA256Sum                            = "SHA256 Sum: %s"
+	UI_Encrypting                           = `Attempting to encrypt plain text file: %s into cipher text file: %s`
+	UI_Decrypting                           = `Attempting to decrypt cipher text file: %s into plain text file: %s`
+	UI_Encrypted                            = `Successfully encrypted plain text file: %s into cipher text file: %s`
+	UI_Decrypted                            = `Successfully decrypted cipher text file: %s into plain text file: %s`
+	UI_SHA256Sum                            = `SHA256 Sum: %s`
 	UI_SharedKey                            = `Shared key: %v
 Shared key length: %v`
 	UI_SharedKeyCipherText = `Shared cipher text: %v
@@ -103,20 +105,23 @@ Shared key cipher text length: %v`
 	UI_CipherTextHeader          = `Cipher Text Header: %v`
 	UI_PasswordEncrypted         = `Password encrypted`
 	UI_KeyDecrypted              = `Key decrypted`
-	UI_EncryptArgs               = "Encrypt arguments: %s %s %s"
-	UI_DecryptArgs               = "Decrypt arguments: %s %s %s"
-	UI_Help                      = `qrc v1.1 by gburnett@outlook.com
+	UI_EncryptArgs               = `Encrypt arguments: %s %s %s`
+	UI_DecryptArgs               = `Decrypt arguments: %s %s %s`
+	UI_ValidateArgs              = `Validate arguments: %s %s`
+	UI_Help                      = `qrc v1.2 by gburnett@outlook.com
 
 Arguments: 
 
 qrc --generate-keys
 qrc --show-key=<keyfile>
-qrc --encrypt key=<key> plaintext=<plaintextfile> ciphertext=<ciphertextfile>
-qrc --decrypt key=<key> ciphertext=<ciphertextfile> plaintext=<plaintextfile>
+qrc --encrypt key=<public keyfile> plaintext=<plaintextfile> ciphertext=<ciphertextfile>
+qrc --decrypt key=<secret keyfile> ciphertext=<ciphertextfile> plaintext=<plaintextfile>
+qrc --validate-keys secret=<secret keyfile> public=<public keyfile>
 
 Examples:
 
 qrc --show-key=public.key
 qrc --encrypt key=public.key plaintext=plaintextfile.txt ciphertext=ciphertextfile.qrc
-qrc --decrypt key=secret.key ciphertext=ciphertextfile.qrc plaintext=plaintextfile.txt`
+qrc --decrypt key=secret.key ciphertext=ciphertextfile.qrc plaintext=plaintextfile.txt
+qrc --validate-keys secret=secret.key public=public.key`
 )

@@ -657,6 +657,44 @@ func GetKeySHA256Sum(_key Key) [SHA256_HASH_LENGTH]byte {
 	return SHA256Sum
 }
 
+// GetKeyDataSHA256Sum: Gets the SHA256 Sum for the given key data
+func GetKeyDataSHA256Sum(_keyData []byte) (bool, [SHA256_HASH_LENGTH]byte) {
+
+	var SHA256Sum [SHA256_HASH_LENGTH]byte
+	var gotSHA256Sum bool = false
+
+	if len(_keyData) > 0 {
+
+		// Get SHA256 Sum of given key data
+		SHA256Sum = sha256.Sum256(_keyData)
+
+		// Check SHA256 Sum is valid
+		if len(SHA256Sum) == SHA256_HASH_LENGTH {
+
+			if IsByteArrayZeros(SHA256Sum[:]) == false {
+
+				if DEBUG == true {
+					fmt.Print(fmt.Sprintf(UI_PublicKeyData, _keyData))
+					fmt.Print(fmt.Sprintf(UI_SHA256Sum, fmt.Sprintf("%x", SHA256Sum)))
+				}
+
+				gotSHA256Sum = true
+
+			} else {
+				fmt.Println(UI_FailedToGenerateSHA256Sum)
+			}
+
+		} else {
+			fmt.Println(UI_FailedToGenerateSHA256Sum)
+		}
+
+	} else {
+		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
+	}
+
+	return gotSHA256Sum, SHA256Sum
+}
+
 // CheckKeySHA256Sum: Checks that SHA256 Sum stored in given key matches sum calculated from given key
 func CheckKeySHA256Sum(_key Key) bool {
 
@@ -672,7 +710,7 @@ func CheckKeySHA256Sum(_key Key) bool {
 		if _key.keySHA256Sum == keySHA256Sum {
 
 			if DEBUG == true {
-				fmt.Print(fmt.Sprintf(UI_SHA256Matches, _key.magicNumber, keySHA256Sum))
+				fmt.Print(fmt.Sprintf(UI_SHA256Matches, _key.keySHA256Sum, keySHA256Sum))
 			}
 
 			sumValid = true
@@ -680,7 +718,7 @@ func CheckKeySHA256Sum(_key Key) bool {
 		} else {
 
 			if DEBUG == true {
-				fmt.Print(fmt.Sprintf(UI_SHA256DoesNotMatch, _key.magicNumber, keySHA256Sum))
+				fmt.Print(fmt.Sprintf(UI_SHA256DoesNotMatch, _key.keySHA256Sum, keySHA256Sum))
 			}
 		}
 
@@ -961,4 +999,138 @@ func SaveKey(_key Key, _fileName string) bool {
 	}
 
 	return savedOk
+}
+
+// ValidateKeys: Validates given keys - checks given public key is the correct pair for the given secret key
+func ValidateKeys(_secretKeyFileName string, _publicKeyFileName string) bool {
+
+	var secretKeyLoaded bool
+	var secretKey Key
+	var publicKeyLoaded bool
+	var publicKey Key
+
+	var decapsulationKey *mlkem.DecapsulationKey1024
+	var encapsulationKey *mlkem.EncapsulationKey1024
+
+	var derivedKeySHA256Sum [SHA256_HASH_LENGTH]byte
+	var gotDerivedKeySHA256Sum bool
+	var givenKeySHA256Sum [SHA256_HASH_LENGTH]byte
+	var gotGivenKeySHA256Sum bool
+
+	var keysValid bool
+
+	var err error
+
+	secretKeyLoaded = false
+	publicKeyLoaded = false
+	gotDerivedKeySHA256Sum = false
+	gotGivenKeySHA256Sum = false
+	keysValid = false
+
+	if len(_secretKeyFileName) > 0 && len(_publicKeyFileName) > 0 {
+
+		// Check secret and public key files exist
+		if FileExists(_secretKeyFileName) == true {
+
+			if FileExists(_publicKeyFileName) == true {
+
+				// Load the secret key
+				secretKey, secretKeyLoaded = LoadKey(_secretKeyFileName)
+
+				if secretKeyLoaded == true {
+
+					// Load the public key
+					publicKey, publicKeyLoaded = LoadKey(_publicKeyFileName)
+
+					if publicKeyLoaded == true {
+
+						// Check secret key is valid
+						if secretKey.magicNumber == SECRET_KEY_MAGIC_NUMBER {
+
+							// Check public key is valid
+							if publicKey.magicNumber == PUBLIC_KEY_MAGIC_NUMBER {
+
+								// Get secret key from secret key data
+								decapsulationKey, err = mlkem.NewDecapsulationKey1024(secretKey.secretKeyData[:])
+
+								if len(decapsulationKey.Bytes()) == SECRET_KEY_LENGTH && err == nil {
+
+									// Extract the encapsulation/public key from the decapsulation/secret key
+									encapsulationKey = decapsulationKey.EncapsulationKey()
+
+									if DEBUG == true {
+										fmt.Println(fmt.Sprintf(UI_PublicKeyData, encapsulationKey.Bytes()))
+										fmt.Println(fmt.Sprintf(UI_PublicKeyData, publicKey.publicKeyData[:]))
+									}
+
+									if len(encapsulationKey.Bytes()) == PUBLIC_KEY_LENGTH {
+
+										// Check extracted encapsulation/public key data has the same SHA256 Sum as the given public key data
+										gotDerivedKeySHA256Sum, derivedKeySHA256Sum = GetKeyDataSHA256Sum(encapsulationKey.Bytes())
+										gotGivenKeySHA256Sum, givenKeySHA256Sum = GetKeyDataSHA256Sum(publicKey.publicKeyData[:])
+
+										if DEBUG == true {
+											fmt.Print(fmt.Sprintf(UI_SHA256Sum, fmt.Sprintf("%x", derivedKeySHA256Sum)))
+											fmt.Print(fmt.Sprintf(UI_SHA256Sum, fmt.Sprintf("%x", givenKeySHA256Sum)))
+										}
+
+										if gotDerivedKeySHA256Sum == true && gotGivenKeySHA256Sum == true {
+
+											if derivedKeySHA256Sum == givenKeySHA256Sum {
+
+												fmt.Println(fmt.Sprintf(UI_PublicKeyFromSecretKey, _publicKeyFileName, _secretKeyFileName))
+												keysValid = true
+
+											} else {
+												fmt.Println(fmt.Sprintf(UI_PublicKeyNotFromSecretKey, _publicKeyFileName, _secretKeyFileName))
+											}
+
+										} else {
+											fmt.Println(UI_FailedToGenerateSHA256Sum)
+										}
+
+									} else {
+										fmt.Println(UI_FailedToCreatePublicKey)
+									}
+
+								} else {
+									fmt.Println(UI_KeyNotValid)
+								}
+
+							} else {
+								fmt.Println(UI_KeyNotValid)
+							}
+
+						} else {
+							fmt.Println(UI_KeyNotValid)
+						}
+
+					} else {
+						fmt.Println(UI_FailedToLoadKey)
+					}
+
+				} else {
+					fmt.Println(UI_FailedToLoadKey)
+				}
+
+			} else {
+				fmt.Println(fmt.Sprintf(UI_FileNotFound, _publicKeyFileName))
+			}
+
+		} else {
+			fmt.Println(fmt.Sprintf(UI_FileNotFound, _secretKeyFileName))
+		}
+
+	} else {
+		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
+		fmt.Println(fmt.Sprintf(UI_Parameter, "_secretKeyFileName: "+_secretKeyFileName+"_publicKeyFileName: "+_publicKeyFileName))
+	}
+
+	return keysValid
+
+}
+
+// RevokeKeys: Revokes the given secret and public keys
+func RevokeKeys(_secretKeyFileName string, _publicKeyFileName string) bool {
+	return true
 }

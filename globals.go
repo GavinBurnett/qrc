@@ -29,9 +29,13 @@ const CMD_GENERATE_KEYS = "--generate-keys"
 const CMD_SHOW_KEY = "--show-key="
 const CMD_ENCRYPT = "--encrypt"
 const CMD_DECRYPT = "--decrypt"
+const CMD_VALIDATE_KEYS = "--validate-keys"
+
 const CMD_KEY = "key="
 const CMD_PLAINTEXT = "plaintext="
 const CMD_CIPHERTEXT = "ciphertext="
+const CMD_SECRET = "secret="
+const CMD_PUBLIC = "public="
 
 const DEBUG bool = false
 const TEST bool = false

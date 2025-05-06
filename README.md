@@ -43,6 +43,12 @@ In this example, a file ciphertextfile.qrc is being decrypted into a file plaint
 
 Note that a secret key must be used for decryption.
 
+Validating a public key
+
+To check if a public key is a match with a secret key (I.E a valid key pair):
+
+qrc --validate-keys secret=secret.key public=public.key
+
 
 WARNING: The author takes no responsibility for data loss.
 
