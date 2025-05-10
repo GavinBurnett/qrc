@@ -1,24 +1,17 @@
 package main
 
 import (
-	"bufio"
 	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"crypto/md5"
 	"crypto/mlkem"
 	"crypto/rand"
 	"crypto/sha256"
 	"encoding/binary"
-	"encoding/hex"
 	"fmt"
 	"io"
 	"os"
-	"strings"
-	"syscall"
 	"time"
-
-	"golang.org/x/term"
 )
 
 // Key: Data structure that defines private and public keys
@@ -126,7 +119,7 @@ func GenerateKeyPair() bool {
 											secretKey.keySHA256Sum = GetKeySHA256Sum(secretKey)
 
 											// Save secret key structure to disk
-											savedSecretKey = SaveKey(secretKey, secretKeyFileName)
+											savedSecretKey = SaveKey(secretKey, secretKeyFileName, false)
 
 											if savedSecretKey == true {
 
@@ -149,7 +142,7 @@ func GenerateKeyPair() bool {
 													publicKey.keySHA256Sum = GetKeySHA256Sum(publicKey)
 
 													// Save public key structure to disk
-													savedPublicKey = SaveKey(publicKey, publicKeyFileName)
+													savedPublicKey = SaveKey(publicKey, publicKeyFileName, false)
 
 													if savedPublicKey == true {
 														fmt.Println(UI_KeysGeneratedOK)
@@ -409,198 +402,6 @@ func DecryptSecretKey(_secretKeyCipherDataBytes [SECRET_KEY_CIPHER_LENGTH]byte) 
 	}
 
 	return decrypted, secretKeyDataBytes
-}
-
-// GetUserInput: Gets user input from command line
-func GetUserInput(_prompt string) string {
-
-	var reader *bufio.Reader
-	var inputStr string
-	var userInput string
-
-	var err error
-
-	if len(_prompt) > 0 {
-
-		// Display prompt stating type of data for user input
-		fmt.Print(_prompt)
-
-		// Read user input from command line
-		reader = bufio.NewReader(os.Stdin)
-		inputStr, err = reader.ReadString('\n')
-
-		if err == nil && len(inputStr) > 0 {
-
-			// Remove any linux carrige returns
-			if strings.Contains(inputStr, "\n") {
-				userInput = strings.Replace(inputStr, "\n", "", -1)
-			}
-
-			// Remove any windows carrige returns
-			if strings.Contains(inputStr, "\r\n") {
-				userInput = strings.Replace(inputStr, "\r\n", "", -1)
-			}
-
-		} else {
-			fmt.Println(UI_FailedToReadCmdData)
-		}
-
-	} else {
-		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
-		fmt.Println(fmt.Sprintf(UI_Parameter, "_prompt: "+_prompt))
-	}
-
-	return userInput
-}
-
-// GetPassword: Gets user password from command line
-func GetUserPassword(_confirm bool) string {
-
-	var passwordString string
-	var confirmPasswordString string
-	var returnPasswordString string
-
-	if _confirm == false {
-
-		// Read password once
-		returnPasswordString = GetPassword(fmt.Sprintf(UI_EnterPassword))
-
-	} else {
-
-		// Read password twice
-		passwordString = GetPassword(fmt.Sprintf(UI_EnterPassword))
-
-		if len(passwordString) > 0 {
-
-			confirmPasswordString = GetPassword(fmt.Sprintf(UI_ConfirmPassword))
-
-			if len(confirmPasswordString) > 0 {
-
-				if passwordString == confirmPasswordString {
-
-					// Both passwords match
-					returnPasswordString = confirmPasswordString
-
-				} else {
-					fmt.Println(UI_InvalidPassword)
-				}
-
-			} else {
-				fmt.Println(UI_InvalidPassword)
-			}
-
-		} else {
-			fmt.Println(UI_InvalidPassword)
-		}
-
-	}
-
-	return returnPasswordString
-}
-
-// GetPassword: Gets user password from command line
-func GetPassword(_passwordPrompt string) string {
-
-	var reader *bufio.Reader
-	var password []byte
-	var passwordString string
-
-	var err error
-
-	if len(_passwordPrompt) > 0 {
-
-		fmt.Print(_passwordPrompt)
-
-		if DEBUG == true {
-
-			// Echo password to terminal
-
-			// Read user input from command line
-			reader = bufio.NewReader(os.Stdin)
-			passwordString, err = reader.ReadString('\n')
-
-			if err == nil && len(passwordString) > 0 {
-
-				// Remove any linux carrige returns
-				passwordString = strings.Replace(passwordString, "\n", "", -1)
-
-			} else {
-				fmt.Println(UI_FailedToReadCmdData)
-			}
-
-		} else {
-
-			// Do not echo password to terminal
-
-			// Read user input from command line
-			password, err = term.ReadPassword(int(syscall.Stdin))
-
-			if err == nil && len(password) > 0 {
-
-				// Convert password to string
-				passwordString = string(password)
-
-			} else {
-				fmt.Println(UI_FailedToReadCmdData)
-			}
-
-			// Move onto next line in command line
-			fmt.Println()
-		}
-	} else {
-		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
-		fmt.Println(fmt.Sprintf(UI_Parameter, "_passwordPrompt: "+_passwordPrompt))
-	}
-
-	return passwordString
-}
-
-// GetPasswordMD5Hash: Gets the MD5 Hash for the given password
-func GetPasswordMD5Hash(_password string) string {
-
-	var passwordBytes []byte
-	var MD5Hash [MD5_HASH_LENGTH]byte
-	var passwordHash string
-
-	if len(_password) > 0 {
-
-		// Convert password string to password byte array
-		passwordBytes = []byte(_password)
-
-		if len(passwordBytes) == len(_password) {
-
-			// Get MD5 Hash of password byte array
-			MD5Hash = md5.Sum(passwordBytes)
-
-			if len(MD5Hash) == MD5_HASH_LENGTH {
-
-				// Convert MD5 Hash to string
-				passwordHash = hex.EncodeToString(MD5Hash[:])
-
-				if len(passwordHash) == PASSWORD_HASH_LENGTH {
-
-					if DEBUG == true {
-						fmt.Println(passwordHash)
-					}
-
-				} else {
-					fmt.Println(UI_FailedToGeneratePasswordHash)
-				}
-
-			} else {
-				fmt.Println(UI_FailedToGenerateMD5Hash)
-			}
-
-		} else {
-			fmt.Println(UI_NoBufferMemory)
-		}
-
-	} else {
-		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
-		fmt.Println(fmt.Sprintf(UI_Parameter, "_password: "+_password))
-	}
-
-	return passwordHash
 }
 
 // GetKeySHA256Sum: Gets the SHA256 Sum for the given key
@@ -952,7 +753,7 @@ func LoadKey(_fileName string) (Key, bool) {
 }
 
 // SaveKey: Save given key to given key filename
-func SaveKey(_key Key, _fileName string) bool {
+func SaveKey(_key Key, _fileName string, _overwrite bool) bool {
 
 	var secretKeyFile *os.File
 	var savedOk = false
@@ -961,7 +762,7 @@ func SaveKey(_key Key, _fileName string) bool {
 
 	if _key.magicNumber == SECRET_KEY_MAGIC_NUMBER || _key.magicNumber == PUBLIC_KEY_MAGIC_NUMBER {
 
-		if FileExists(_fileName) == false {
+		if FileExists(_fileName) == false || _overwrite == true {
 
 			// Create file for key
 			secretKeyFile, err = os.Create(_fileName)
@@ -1132,5 +933,98 @@ func ValidateKeys(_secretKeyFileName string, _publicKeyFileName string) bool {
 
 // RevokeKeys: Revokes the given secret and public keys
 func RevokeKeys(_secretKeyFileName string, _publicKeyFileName string) bool {
-	return true
+
+	var confirmRevoke bool
+	var validated bool
+	var secretKeyLoaded bool
+	var secretKey Key
+	var publicKeyLoaded bool
+	var publicKey Key
+	var emptySecretKeyCipherBytes [SECRET_KEY_CIPHER_LENGTH]byte
+	var emptyPublicKeyBytes [PUBLIC_KEY_LENGTH]byte
+	var secretKeySaved bool
+	var publicKeySaved bool
+	var revoked bool
+
+	confirmRevoke = false
+	validated = false
+	secretKeyLoaded = false
+	publicKeyLoaded = false
+	secretKeySaved = false
+	revoked = false
+
+	if len(_secretKeyFileName) > 0 && len(_publicKeyFileName) > 0 {
+
+		// Confirm key revoke
+		fmt.Println(fmt.Sprintf(UI_RevokeWarning, _secretKeyFileName, _publicKeyFileName))
+		fmt.Print(UI_ConfirmNoDefault)
+		confirmRevoke = GetUserYesOrNo(false)
+
+		if confirmRevoke == true {
+
+			// Prompt for secret key password
+			fmt.Println(UI_RevokePassword)
+
+			// Check given secret and public keys match (are a key pair)
+			validated = ValidateKeys(_secretKeyFileName, _publicKeyFileName)
+			if validated == true {
+
+				// Prompt again for secret key password
+				fmt.Println(UI_ConfirmRevokePassword)
+
+				// Load the secret key
+				secretKey, secretKeyLoaded = LoadKey(_secretKeyFileName)
+
+				if secretKeyLoaded == true {
+
+					// Load the public key
+					publicKey, publicKeyLoaded = LoadKey(_publicKeyFileName)
+
+					if publicKeyLoaded == true {
+
+						// Revoke secret and public key pair
+						secretKey.keyRevoked = true
+						secretKey.secretKeyCipherData = emptySecretKeyCipherBytes
+
+						secretKeySaved = SaveKey(secretKey, _secretKeyFileName, true)
+
+						if secretKeySaved == true {
+
+							publicKey.keyRevoked = true
+							publicKey.publicKeyData = emptyPublicKeyBytes
+
+							publicKeySaved = SaveKey(publicKey, _publicKeyFileName, true)
+
+							if publicKeySaved == true {
+								fmt.Println(fmt.Sprintf(UI_Revoked, _secretKeyFileName, _publicKeyFileName))
+							} else {
+								fmt.Println(fmt.Sprintf(UI_FailedToRevoke, _secretKeyFileName, _publicKeyFileName))
+							}
+
+						} else {
+							fmt.Println(fmt.Sprintf(UI_FailedToRevoke, _secretKeyFileName, _publicKeyFileName))
+						}
+
+					} else {
+						fmt.Println(UI_FailedToLoadKey)
+					}
+
+				} else {
+					fmt.Println(UI_FailedToLoadKey)
+				}
+
+			} else {
+				fmt.Println(fmt.Sprintf(UI_PublicKeyNotFromSecretKey, _publicKeyFileName, _secretKeyFileName))
+			}
+
+		} else {
+			fmt.Println(UI_RevokeCancelled)
+		}
+
+	} else {
+		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
+		fmt.Println(fmt.Sprintf(UI_Parameter, "_secretKeyFileName: "+_secretKeyFileName+"_publicKeyFileName: "+_publicKeyFileName))
+	}
+
+	return revoked
 }

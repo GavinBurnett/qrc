@@ -30,6 +30,7 @@ const CMD_SHOW_KEY = "--show-key="
 const CMD_ENCRYPT = "--encrypt"
 const CMD_DECRYPT = "--decrypt"
 const CMD_VALIDATE_KEYS = "--validate-keys"
+const CMD_REVOKE_KEYS = "--revoke-keys"
 
 const CMD_KEY = "key="
 const CMD_PLAINTEXT = "plaintext="

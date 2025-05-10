@@ -25,6 +25,7 @@ func main() {
 	var encrypted bool = false
 	var decrypted bool = false
 	var validated bool = false
+	var revoked bool = false
 
 	exitCode := 0
 
@@ -92,6 +93,33 @@ func main() {
 						}
 						validated = ValidateKeys(secretKey, publicKey)
 						if validated == false {
+							exitCode = 1
+						}
+					} else {
+						exitCode = 1
+						fmt.Println(UI_InvalidArgs)
+					}
+
+				} else {
+					exitCode = 1
+					fmt.Println(UI_InvalidArgs)
+				}
+			} else if os.Args[1] == CMD_REVOKE_KEYS {
+				// Revoke keys
+				if DEBUG == true {
+					fmt.Println(CMD_REVOKE_KEYS)
+				}
+				if strings.HasPrefix(os.Args[2], CMD_SECRET) && strings.HasPrefix(os.Args[3], CMD_PUBLIC) {
+
+					secretKey, publicKeyParsed = ParseCMDArgument(os.Args[2])
+					publicKey, secretKeyParsed = ParseCMDArgument(os.Args[3])
+
+					if secretKeyParsed == true && publicKeyParsed == true {
+						if DEBUG == true {
+							fmt.Println(fmt.Sprintf(UI_RevokeArgs, secretKey, publicKey))
+						}
+						revoked = RevokeKeys(secretKey, publicKey)
+						if revoked == false {
 							exitCode = 1
 						}
 					} else {

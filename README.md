@@ -27,7 +27,7 @@ The details of a key file can be displayed as follows:
 
 qrc --show-key=public.key
 
-Encrypting and decrypting files
+Encrypting and decrypting files:
 
 A file (I.E a plain text file) can be encrypted into a cipher text file as follows:
 
@@ -43,11 +43,20 @@ In this example, a file ciphertextfile.qrc is being decrypted into a file plaint
 
 Note that a secret key must be used for decryption.
 
-Validating a public key
+Validating a public key:
 
 To check if a public key is a match with a secret key (I.E a valid key pair):
 
 qrc --validate-keys secret=secret.key public=public.key
+
+Revoking a public and secret key pair:
+
+A key pair can be revoked as follows:
+
+qrc --revoke-keys secret=secret.key public=public.key
+
+WARNING: Revoking a key pair will make them inoperable for all cryptographic operations.
+A revoke cannot be reversed.
 
 
 WARNING: The author takes no responsibility for data loss.

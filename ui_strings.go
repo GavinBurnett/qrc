@@ -56,6 +56,7 @@ const (
 	UI_FailedToCreateTempKey                = `ERROR: Failed to create temporary key`
 	UI_FailedToReadCmdData                  = `ERROR: Failed to read data from command line`
 	UI_FailedToLoadKey                      = `ERROR: Failed to load key`
+	UI_FailedToRevoke                       = `ERROR: Failed to revoke secret key: %s and public key: %s`
 	UI_PublicKeyNotFromSecretKey            = `Public key: %s not a match with Secret key: %s`
 	UI_PublicKeyFromSecretKey               = `Public key: %s matches with Secret key: %s`
 	UI_FileSize                             = `%s File size: %v`
@@ -90,8 +91,8 @@ Shared key cipher text length: %v`
 	UI_KeyLength                 = `Key length: %v`
 	UI_DateCreated               = `Date created: %s`
 	UI_KeysGeneratedOK           = `Public and secret keys generated successfully`
-	UI_EnterPassword             = `Enter Password:`
-	UI_ConfirmPassword           = `Confirm Password:`
+	UI_EnterPassword             = `Enter secret key password:`
+	UI_ConfirmPassword           = `Confirm secret key password:`
 	UI_SHA256Matches             = `SHA256Sums Match. Key value: %x Calculated value: %x`
 	UI_SHA256DoesNotMatch        = `SHA256Sums Do not match. Key value: %x Calculated value: %x`
 	UI_SecretKeyData             = `Secret key data: %v`
@@ -108,6 +109,15 @@ Shared key cipher text length: %v`
 	UI_EncryptArgs               = `Encrypt arguments: %s %s %s`
 	UI_DecryptArgs               = `Decrypt arguments: %s %s %s`
 	UI_ValidateArgs              = `Validate arguments: %s %s`
+	UI_RevokeArgs                = `Revoke arguments: %s %s`
+	UI_RevokeWarning             = `WARNING: Revoking secret key: %s and public key: %s will stop key pair from being used for encryption and decryption. This cannot be reversed.`
+	UI_ConfirmNoDefault          = `Are you sure? [N/y]:`
+	UI_ConfirmYesDefault         = `Are you sure? [n/Y]:`
+	UI_RevokePassword            = `Secret key password must be given to revoke key pair`
+	UI_ConfirmRevokePassword     = `Confirm secret key password to revoke key pair`
+	UI_Revoked                   = `Revoked secret key: %s and public key: %s`
+	UI_RevokeCancelled           = `Key revoke cancelled`
+	UI_ReadChar                  = `Read char: %c`
 	UI_Help                      = `qrc v1.2 by gburnett@outlook.com
 
 Arguments: 
@@ -117,11 +127,13 @@ qrc --show-key=<keyfile>
 qrc --encrypt key=<public keyfile> plaintext=<plaintextfile> ciphertext=<ciphertextfile>
 qrc --decrypt key=<secret keyfile> ciphertext=<ciphertextfile> plaintext=<plaintextfile>
 qrc --validate-keys secret=<secret keyfile> public=<public keyfile>
+qrc --revoke-keys secret=<secret keyfile> public=<public keyfile>
 
 Examples:
 
 qrc --show-key=public.key
 qrc --encrypt key=public.key plaintext=plaintextfile.txt ciphertext=ciphertextfile.qrc
 qrc --decrypt key=secret.key ciphertext=ciphertextfile.qrc plaintext=plaintextfile.txt
-qrc --validate-keys secret=secret.key public=public.key`
+qrc --validate-keys secret=secret.key public=public.key
+qrc --revoke-keys secret=secret.key public=public.key`
 )
