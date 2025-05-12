@@ -541,7 +541,7 @@ func DisplayKey(_fileName string) {
 		if FileExists(_fileName) == true {
 
 			// Load the key
-			displayKey, keyLoaded = LoadKey(_fileName)
+			displayKey, keyLoaded = LoadKeyFile(_fileName)
 
 			if keyLoaded == true {
 
@@ -581,8 +581,90 @@ func DisplayKey(_fileName string) {
 // LoadKey: Loads the given key file
 func LoadKey(_fileName string) (Key, bool) {
 
-	var keyFile *os.File
 	var loadKey Key
+	var fileLoaded bool = false
+	var secretKeyDataDecrypted bool = false
+	var secretKeyData [SECRET_KEY_LENGTH]byte
+	var loaded bool = false
+
+	if len(_fileName) > 0 {
+
+		// Load key from disk
+		loadKey, fileLoaded = LoadKeyFile(_fileName)
+
+		if fileLoaded == true {
+
+			if loadKey.magicNumber == SECRET_KEY_MAGIC_NUMBER {
+
+				if loadKey.keyRevoked == false {
+
+					if CheckKeySHA256Sum(loadKey) == true {
+
+						// Decrypt secret key data
+						secretKeyDataDecrypted, secretKeyData = DecryptSecretKey(loadKey.secretKeyCipherData)
+
+						if secretKeyDataDecrypted == true && len(secretKeyData) == SECRET_KEY_LENGTH {
+
+							// Add decrypted secret key data to key structure
+							loadKey.secretKeyData = secretKeyData
+
+							if DEBUG == true {
+								fmt.Println(fmt.Sprintf(UI_LoadedSecretKey, loadKey))
+							}
+
+							loaded = true
+
+						} else {
+							fmt.Println(UI_FailedToDecryptSecretKey)
+						}
+
+					} else {
+						fmt.Println(UI_InvalidSHA256Sum)
+					}
+
+				} else {
+					fmt.Println(UI_KeyRevoked)
+				}
+			}
+
+			if loadKey.magicNumber == PUBLIC_KEY_MAGIC_NUMBER {
+
+				if loadKey.keyRevoked == false {
+
+					if CheckKeySHA256Sum(loadKey) == true {
+
+						if DEBUG == true {
+							fmt.Println(fmt.Sprintf(UI_LoadedPublicKey, loadKey))
+						}
+
+						loaded = true
+
+					} else {
+						fmt.Println(UI_InvalidSHA256Sum)
+					}
+
+				} else {
+					fmt.Println(UI_KeyRevoked)
+				}
+			}
+
+		} else {
+			fmt.Println(UI_FailedToLoadKey)
+		}
+
+	} else {
+		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
+		fmt.Println(fmt.Sprintf(UI_Parameter, "_fileName: "+_fileName))
+	}
+
+	return loadKey, loaded
+}
+
+// LoadKeyFile: Loads the given key file from disk
+func LoadKeyFile(_fileName string) (Key, bool) {
+
+	var keyFile *os.File
+
 	var magicNumber int64
 	var ownerName [OWNER_NAME_LENGTH]byte
 	var ownerEmail [OWNER_EMAIL_LENGTH]byte
@@ -594,8 +676,9 @@ func LoadKey(_fileName string) (Key, bool) {
 	var secretKeyCipherData [SECRET_KEY_CIPHER_LENGTH]byte
 	var publicKeyData [PUBLIC_KEY_LENGTH]byte
 	var keySHA256Sum [SHA256_HASH_LENGTH]byte
-	var secretKeyDataDecrypted bool = false
-	var loaded bool = false
+
+	var loadKey Key
+	var fileLoaded bool = false
 
 	var err error
 
@@ -630,65 +713,9 @@ func LoadKey(_fileName string) (Key, bool) {
 														err = binary.Read(keyFile, binary.LittleEndian, &keySHA256Sum)
 														if err == nil {
 
-															if magicNumber == SECRET_KEY_MAGIC_NUMBER {
-
-																// Load key data into key structure
-																loadKey = Key{magicNumber, ownerName, ownerEmail, keyType, keyLength, keyRevoked, dateCreated, secretKeyData, secretKeyCipherData, publicKeyData, keySHA256Sum}
-
-																if keyRevoked == false {
-
-																	if CheckKeySHA256Sum(loadKey) == true {
-
-																		// Decrypt secret key data
-																		secretKeyDataDecrypted, secretKeyData = DecryptSecretKey(secretKeyCipherData)
-
-																		if secretKeyDataDecrypted == true && len(secretKeyData) == SECRET_KEY_LENGTH {
-
-																			// Add decrypted secret key data to key structure
-																			loadKey.secretKeyData = secretKeyData
-
-																			if DEBUG == true {
-																				fmt.Println(fmt.Sprintf(UI_LoadedSecretKey, loadKey))
-																			}
-
-																			loaded = true
-
-																		} else {
-																			fmt.Println(UI_FailedToDecryptSecretKey)
-																		}
-
-																	} else {
-																		fmt.Println(UI_InvalidSHA256Sum)
-																	}
-
-																} else {
-																	fmt.Println(UI_KeyRevoked)
-																}
-															}
-
-															if magicNumber == PUBLIC_KEY_MAGIC_NUMBER {
-
-																// Load key data into key structure
-																loadKey = Key{magicNumber, ownerName, ownerEmail, keyType, keyLength, keyRevoked, dateCreated, secretKeyData, secretKeyCipherData, publicKeyData, keySHA256Sum}
-
-																if keyRevoked == false {
-
-																	if CheckKeySHA256Sum(loadKey) == true {
-
-																		if DEBUG == true {
-																			fmt.Println(fmt.Sprintf(UI_LoadedPublicKey, loadKey))
-																		}
-
-																		loaded = true
-
-																	} else {
-																		fmt.Println(UI_InvalidSHA256Sum)
-																	}
-
-																} else {
-																	fmt.Println(UI_KeyRevoked)
-																}
-															}
+															// Load key data into key structure
+															loadKey = Key{magicNumber, ownerName, ownerEmail, keyType, keyLength, keyRevoked, dateCreated, secretKeyData, secretKeyCipherData, publicKeyData, keySHA256Sum}
+															fileLoaded = true
 
 														} else {
 															fmt.Println(fmt.Sprintf(UI_FileReadError, _fileName, err))
@@ -743,13 +770,12 @@ func LoadKey(_fileName string) (Key, bool) {
 		} else {
 			fmt.Println(fmt.Sprintf(UI_FileNotFound, _fileName))
 		}
-
 	} else {
 		fmt.Print(fmt.Sprintf(UI_ParameterInvalid, GetFunctionName()))
 		fmt.Println(fmt.Sprintf(UI_Parameter, "_fileName: "+_fileName))
 	}
 
-	return loadKey, loaded
+	return loadKey, fileLoaded
 }
 
 // SaveKey: Save given key to given key filename
