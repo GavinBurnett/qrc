@@ -39,4 +39,3 @@ const CMD_SECRET = "secret="
 const CMD_PUBLIC = "public="
 
 const DEBUG bool = false
-const TEST bool = false
