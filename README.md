@@ -59,6 +59,12 @@ WARNING: Revoking a key pair will make them inoperable for all cryptographic ope
 A revoke cannot be reversed.
 
 
+Error codes returned to shell:
+
+0 = success
+
+1 = failed
+
 WARNING: The author takes no responsibility for data loss.
 
 Citations:
