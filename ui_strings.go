@@ -122,7 +122,7 @@ Shared key cipher text length: %v`
 	UI_Revoked                   = `Revoked secret key: %s and public key: %s`
 	UI_RevokeCancelled           = `Key revoke cancelled`
 	UI_ReadChar                  = `Read char: %c`
-	UI_Help                      = `qrc v1.2 by gburnett@outlook.com
+	UI_Help                      = `qrc v1.3 by gburnett@outlook.com
 
 Arguments: 
 
