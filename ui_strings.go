@@ -57,6 +57,10 @@ const (
 	UI_FailedToReadCmdData                  = `ERROR: Failed to read data from command line`
 	UI_FailedToLoadKey                      = `ERROR: Failed to load key`
 	UI_FailedToRevoke                       = `ERROR: Failed to revoke secret key: %s and public key: %s`
+	UI_RandomDataError                      = `ERROR: Random data not generated`
+	UI_TestFileOpenError                    = `ERROR: File open error: `
+	UI_TestFileCreateError                  = `ERROR: Failed to create file: `
+	UI_Done                                 = ` - Done.`
 	UI_PublicKeyNotFromSecretKey            = `Public key: %s not a match with Secret key: %s`
 	UI_PublicKeyFromSecretKey               = `Public key: %s matches with Secret key: %s`
 	UI_FileSize                             = `%s File size: %v`
